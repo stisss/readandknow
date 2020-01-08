@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS article;
-DROP TABLE IF EXISTS comment;
+--DROP TABLE IF EXISTS user;
+--DROP TABLE IF EXISTS article;
+--DROP TABLE IF EXISTS comment;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -8,7 +8,7 @@ CREATE TABLE user (
   surname TEXT,
   last_name TEXT,
   email TEXT,
-  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  createdwhy TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   institution TEXT,
   password TEXT NOT NULL
 );
@@ -21,13 +21,13 @@ CREATE TABLE article (
   description TEXT,
   body TEXT NOT NULL,
   magazine TEXT,
-  FOREIGN KEY author_id REFERENCES user (id)
+  FOREIGN KEY (author_id) REFERENCES user (id)
 );
 
 CREATE TABLE comment (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  author_id INTEGER NOT NULL,
   body TEXT NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY relates_to REFERENCES comment (id),
-  FOREIGN KEY author_id REFERENCES user (id)
+  FOREIGN KEY (author_id) REFERENCES user (id)
 );

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Przegląd{% endblock %}</h1>
+  {% if g.user %}
+    <div>Obserwuj</div>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <header>
+    <u1>
+      <li>Login {{ user['username'] }}</li>
+      <li>Surname {{ user['surname'] }}</li>
+      <li>Last name {{ user['last_name'] }}</li>
+      <li>Institution {{ user['Institution'] }}</li>
+      <li>Email {{ user['email'] }}</li>
+    </u1>
+  </header>
+  {% for article in articles %}
+  <article class="post">
+    <header>
+      <div>
+        <h1>{{ article['title'] }}</h1>
+        <div class="about">autor: {{ article['username'] }}, {{ article['created'].strftime('%Y-%m-%d') }}</div>
+      </div>
+      {% if g.user['id'] == article['author_id'] %}
+        <a class="action" href="{{ url_for('blog.update', id=article['id']) }}">Edytuj</a>
+      {% endif %}
+    </header>
+    <p class="description">{{ article['description'] }}</p>
+    <p class="body">{{article['body'] }}</p>
+  </article>
+  {% endfor %}
+{% endblock %}
