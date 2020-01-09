@@ -6,10 +6,16 @@
 
 {% block content %}
   <form method="post">
-    <label for="username">Login</label>
-    <input name="username" id="username" required>
+    <label for="email">E-mail</label>
+    <input name="email" id="email" pattern="*@*\.*" required>
     <label for="password">Hasło</label>
     <input type="password" name="password" id="password" required>
+    <label for="name">Name</label>
+    <input name="name" id="name" required>
+    <label for="last_name">Last name</label>
+    <input name="last_name" id="last_name" required>
+    <label for="institution">Institution</label>
+    <input name="institution" id="institution">
     <input type="submit" value="Register">
   </form>
 {% endblock %}

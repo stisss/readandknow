@@ -12,24 +12,32 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
+        name = request.form['name']
+        last_name = request.form['last_name']
+        institution = request.form['institution']
         db = get_db()
         error = None
         
-        if not username:
-            error = 'Username is required'
+        if not email:
+            error = 'E-mail address is required'
         elif not password:
             error = 'Password is required'
+        elif not email or not name or not last_name:
+            error = 'Fill required fields'
+        elif not institution:
+            institution = ''
         elif db.execute(
-            'SELECT id FROM user WHERE username = ?', (username,)
+            'SELECT id FROM user WHERE email = ?', (email,)
         ).fetchone() is not None:
-            error = 'User {} is already registered'.format(username)
+            error = 'E-mail address {} is already registered'.format(email)
         
         if error is None:
             db.execute(
-                'INSERT INTO user (username, password) VALUES (?,?)',
-                (username, generate_password_hash(password))
+                'INSERT INTO user (email, password, name, last_name, institution) '
+                'VALUES (?,?,?,?,?)',
+                (email, generate_password_hash(password), name, last_name, institution)
             )
             db.commit()
             return redirect(url_for('auth.login'))
@@ -42,16 +50,16 @@ def register():
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
         if request.method == 'POST':
-            username = request.form['username']
+            email = request.form['email']
             password = request.form['password']
             db = get_db()
             error = None
             user = db.execute(
-                'SELECT * FROM user WHERE username = ?', (username,)
+                'SELECT * FROM user WHERE email = ?', (email,)
             ).fetchone()
 
             if user is None:
-                error = 'Incorrect username.'
+                error = 'Incorrect e-mail address.'
             elif not check_password_hash(user['password'], password):
                 error = 'Incorrect password.'
 

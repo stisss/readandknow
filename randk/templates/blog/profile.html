@@ -10,11 +10,12 @@
 {% block content %}
   <header>
     <u1>
-      <li>Login {{ user['username'] }}</li>
-      <li>Surname {{ user['surname'] }}</li>
-      <li>Last name {{ user['last_name'] }}</li>
-      <li>Institution {{ user['Institution'] }}</li>
-      <li>Email {{ user['email'] }}</li>
+      <li>Name: {{ user['name'] }}</li>
+      <li>Last name: {{ user['last_name'] }}</li>
+      {% if user['institution'] %}
+      <li>Institution: {{ user['institution'] }}</li>
+      {% endif %}
+      <li>Email: {{ user['email'] }}</li>
     </u1>
   </header>
   {% for article in articles %}

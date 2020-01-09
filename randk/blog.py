@@ -12,7 +12,7 @@ bp = Blueprint('blog', __name__)
 def index():
     db = get_db()
     articles = db.execute(
-        'SELECT article.id, title, description, body, article.created, author_id, username'
+        'SELECT article.id, title, description, body, article.created, author_id, name, last_name'
         ' FROM article JOIN user u ON article.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -48,7 +48,7 @@ def create():
 
 def get_article(id, check_author=True):
     article = get_db().execute(
-        'SELECT p.id, title, description, body, created, author_id, username'
+        'SELECT p.id, title, description, body, created, author_id, name, last_name'
         ' FROM article p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -64,7 +64,7 @@ def get_article(id, check_author=True):
 
 def get_user(id):
     user = get_db().execute(
-        'SELECT id, username, surname, last_name, email, institution'
+        'SELECT id, email, name, last_name, institution'
         ' FROM user'
         ' WHERE id = ?',
         (id,)
@@ -117,7 +117,7 @@ def delete(id):
 
 def get_users_articles(author_id):
     articles = get_db().execute(
-        'SELECT p.id, title, description, body, created, author_id, username'
+        'SELECT p.id, title, description, body, created, author_id'
         ' FROM article p JOIN user u ON p.author_id = u.id'
         ' WHERE p.author_id = ?',
         (author_id,)

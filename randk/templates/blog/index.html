@@ -13,7 +13,7 @@
       <header>
         <div>
           <h1>{{ post['title'] }}</h1>
-          <div class="about">autor: {{ post['username'] }}, {{ post['created'].strftime('%Y-%m-%d') }}</div>
+          <div class="about">autor: {{ post['name'] ~ " " ~ post['last_name'] }}, {{ post['created'].strftime('%Y-%m-%d') }}</div>
         </div>
         {% if g.user['id'] == post['author_id'] %}
           <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edytuj</a>
