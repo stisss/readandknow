@@ -21,8 +21,8 @@
           <button type="submit"><i class="fa fa-search"></i></button>
         </div>
         {% if g.user %}
-          <div class="optionT"><a href="{{ url_for('blog.display_profile', id=g.user['id'])}}">{{ g.user['name'] ~ " " ~ g.user['last_name'] }}</a></div>
           <div class="optionT"><a href="{{ url_for('auth.logout') }}">Wyloguj</a></div class="optionT">
+          <div class="optionT"><a href="{{ url_for('blog.display_profile', id=g.user['id'])}}">{{ g.user['name'] ~ " " ~ g.user['last_name'] }}</a></div>
         {% else %}
           <div class="optionT"><a href="{{ url_for('auth.register') }}">Rejestracja<a></div>
           <div class="optionT"><a href="{{ url_for('auth.login') }}">Logowanie</a></div class="optionT">
