@@ -1,24 +1,40 @@
 <!doctype html>
+<meta charset="UTF-8">
 <title>{% block title %}{% endblock %} - Read & know</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-  <h1><a href="{{ url_for('blog.index') }}">Read & Know</a></h1>
-  <ul>
-    {% if g.user %}
-      <li><a href="{{ url_for('blog.display_profile', id=g.user['id'])}}">{{ g.user['name'] ~ " " ~ g.user['last_name'] }}</a>
-      <li><a href="{{ url_for('auth.logout') }}">Wyloguj</a>
-    {% else %}
-      <li><a href="{{ url_for('auth.register') }}">Rejestracja</a>
-      <li><a href="{{ url_for('auth.login') }}">Logowanie</a>
-    {% endif %}
-  </ul>
-</nav>
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
-</section>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
+<link href="https://fonts.googleapis.com/css?family=Oswald:400,700&display=swap&subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div id="container">
+  <div id="sidebar">
+    <h1><a href="{{ url_for('blog.index') }}">Read & Know</a></h1>
+    <div class="optionL">Strona główna</div>
+    <div class="optionL">Najwyżej oceniane artykuły</div>
+    <div class="optionL">Zapisane</div>
+    <div class="optionL">Polecane</div>
+    <div class="optionL">Współpraca</div>
+  </div>
+  <section class="content">
+    <div id="topbar">
+      <ul>
+        <div id="searchbar">
+          <input type="text" placeholder=" Szukaj..." name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+        {% if g.user %}
+          <div class="optionT"><a href="{{ url_for('blog.display_profile', id=g.user['id'])}}">{{ g.user['name'] ~ " " ~ g.user['last_name'] }}</a></div>
+          <div class="optionT"><a href="{{ url_for('auth.logout') }}">Wyloguj</a></div class="optionT">
+        {% else %}
+          <div class="optionT"><a href="{{ url_for('auth.register') }}">Rejestracja<a></div>
+          <div class="optionT"><a href="{{ url_for('auth.login') }}">Logowanie</a></div class="optionT">
+        {% endif %}
+      </ul>
+    </div>
+    <header>
+      {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </section>
+</div>
