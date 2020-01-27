@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Nowy artykuł{% endblock %}</h1>
+  <h1 style="padding: 20px;">{% block title %}Nowy artykuł{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="title">Tytuł</label>
-    <input name="title" id="title" value="{{ request.form['title'] }}" required>
-    <label for="opis">Opis</label>
-    <input name="description" id="description" value="{{ request.form['description'] }}" required>
-    <label for="body">Treść</label>
-    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
-    <input type="submit" value="Publikuj">
-  </form>
+  <div class="crud">
+    <form method="post" >
+      <input name="title" placeholder="Tytuł artykułu..." id="title" value="{{ request.form['title'] }}" required>
+      <input name="description" placeholder="Opis..." id="description" value="{{ request.form['description'] }}" required>
+      <textarea name="body" placeholder="Treść..." id="body">{{ request.form['body'] }}</textarea>
+      <input type="submit" value="Publikuj">
+    </form>
+  </div>
+  <div class="details">
+    <div class="detailsD">
+      <script> document.write(new Date().toLocaleDateString()); </script><br><br>
+      {{ g.user['name'] ~ " " ~ g.user['last_name'] }}<br>
+      {{ g.user['institution']}}
+    </div>
+    <div class="attachments">
+      <div><i class="icon-picture">aaa</i></div>
+    </div>
+  </div>
 {% endblock %}

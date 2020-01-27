@@ -17,6 +17,8 @@
         </div>
         {% if g.user['id'] == post['author_id'] %}
           <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edytuj</a>
+        {%else%}
+          <button id="save">Zapisz</button>
         {% endif %}
       </header>
       <p class="description">{{ post['description'] }}</p>

@@ -1,8 +1,8 @@
 
 
 
-html { font-family: 'Oswald', sans-serif;  background: #303E40; padding: 1rem; height: 100%;}
-body { max-width: 960px; margin: 0 auto; background: white; height: 100%;}
+html { font-family: 'Oswald', sans-serif;  background: #303E40; padding: 1rem; height: 100%; top:0;}
+body { max-width: 960px; margin: 0 auto; background: white; height: 100%; top:0;}  
 h1 { font-family: serif; color: #CC854E; margin: 1rem 0;}
 #overview
 {
@@ -25,6 +25,7 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 {
     float: left;
     height: 100%;
+    top:0;
 }
 #topbar
 {
@@ -54,11 +55,12 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
     padding-top: 20px;
     float: left;
     width: 220px;
-    height: 700px;
+    height: 100%;
     background-color: #607D80;
     position: sticky;
     top: 0;
     padding: 10px;
+    
 }
 #sidebar h1
 {
@@ -81,10 +83,10 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 {
     background-color: #BFFAFF;
     color: #303E40;
+    cursor: pointer;
 }
 .content 
 { 
-    /*padding: 0 1rem 1rem; */
     width: 720px;
     background-color: white;
     float: left;
@@ -103,6 +105,7 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 {
     padding-left: 30px;
     padding-right: 30px;
+    cursor: pointer;
 }
 .post > header { display: flex; align-items: flex-end; font-size: 0.85em; }
 .post > header > div:first-of-type { flex: auto; }
@@ -137,4 +140,61 @@ input[type=submit] { align-self: start; min-width: 10em; }
 #searchbar button
 {
     border-radius: 20px;
+}
+
+#sectionL
+{
+    float: left;
+    height: 100%;
+}
+
+.crud
+{
+    margin: 20px;
+    padding: 20px;
+    width: 400px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    float: left;
+    display: block;
+}
+
+.crud input
+{
+    border-radius: 20px;
+}
+
+.crud #title
+{
+    font-size: 24px;
+    padding: 5px;
+}
+
+.crud #description
+{
+    font-size: 18px;
+    padding: 5px;
+}
+
+.crud textarea
+{
+    border: 2px dotted grey;
+    padding:10px;
+}
+
+.details
+{
+    float: left;
+    border: 2px solid grey;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    width: 170px;
+}
+
+.attachments
+{
+    border-top: 2px solid grey;
 }

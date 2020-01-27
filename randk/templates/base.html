@@ -5,14 +5,16 @@
 <link href="https://fonts.googleapis.com/css?family=Oswald:400,700&display=swap&subset=latin-ext" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div id="container">
-  <div id="sidebar">
-    <h1><a href="{{ url_for('blog.index') }}">Read & Know</a></h1>
-    <div class="optionL">Strona główna</div>
-    <div class="optionL">Najwyżej oceniane artykuły</div>
-    <div class="optionL">Zapisane</div>
-    <div class="optionL">Polecane</div>
-    <div class="optionL">Współpraca</div>
-  </div>
+  <section id="sectionL">
+    <div id="sidebar">
+      <h1><a href="{{ url_for('blog.index') }}">Read & Know</a></h1>
+      <div class="optionL">Strona główna</div>
+      <div class="optionL">Najwyżej oceniane artykuły</div>
+      <div class="optionL">Zapisane</div>
+      <div class="optionL">Polecane</div>
+      <div class="optionL">Współpraca</div>
+    </div>
+  </section>
   <section class="content">
     <div id="topbar">
       <ul>
