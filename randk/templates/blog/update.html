@@ -1,23 +1,40 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Edytuj "{{ post['title'] }}"{% endblock %}</h1>
+  <h1 style="padding: 20px;">{% block title %}Edytuj "{{ post['title'] }}"{% endblock %}</h1style="padding: 20px;">
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="title">Tytuł</label>
-    <input name="title" id="title"
-      value="{{ request.form['title'] or post['title'] }}" required>
-    <label for="description">Opis</label>
-    <input name="description" id="description"
-      value="{{ request.form['description'] or post['description'] }}" required>
-    <label for="body">Treść</label>
-    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-    <input type="submit" value="Save">
-  </form>
-  <hr>
-  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
-    <input class="danger" type="submit" value="Usuń" onclick="return confirm('Are you sure?');">
-  </form>
+  <div class="crud">
+    <form method="post">
+      <input name="title" id="title"
+        value="{{ request.form['title'] or post['title'] }}" required>
+      <input name="description" id="description"
+        value="{{ request.form['description'] or post['description'] }}" required>
+      <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+      <input type="submit" value="Zapisz" class="edit">
+    </form>
+    <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+      <input class="danger" type="submit" value="Usuń" onclick="return confirm('Are you sure?');">
+    </form>
+  </div>
+  <div id="privacy" class="details">
+    <div class="scientist">
+      <img src="{{url_for('static', filename='scientist.png')}}" height="50px" width="50px" />
+    </div>
+    <div class="detailsD">
+      {{ g.user['name'] ~ " " ~ g.user['last_name'] }}<br>
+      {{ g.user['institution']}}
+      <br><br>
+      <script> document.write(new Date().toLocaleDateString()); </script>
+    </div>
+    <div class="attachments">
+      <i id="paperclip" class="fa fa-paperclip" aria-hidden="true"></i><br>
+    </div>
+  </div>
+  Prywatny
+  <label class="switch">
+    <input type="checkbox">
+    <span class="slider round"></span>
+  </label>
 {% endblock %}

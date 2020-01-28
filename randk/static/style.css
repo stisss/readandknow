@@ -1,9 +1,9 @@
 
 
 
-html { font-family: 'Oswald', sans-serif;  background: #303E40; padding: 1rem; height: 100%; top:0;}
-body { max-width: 960px; margin: 0 auto; background: white; height: 100%; top:0;}  
-h1 { font-family: serif; color: #CC854E; margin: 1rem 0;}
+html {  overflow: none; font-family: 'Oswald', sans-serif; background: #303E40; padding: 1rem; height: 100%; top:0;}
+body { overflow: none; font-family: 'Oswald', sans-serif; max-width: 1200px; margin: 0 auto; background: white; height: 100%; top:0;}  
+h1 { font-family: 'Oswald', sans-serif; color: #CC854E; margin: 1rem 0;}
 #overview
 {
     color: tomato;
@@ -16,20 +16,29 @@ nav h1 { flex: auto; margin: 0; }
 nav h1 a { text-decoration: none; padding: 0.25rem 0.5rem; }
 nav ul  { display: flex; list-style: none; margin: 0; padding: 0; }
 nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
-.action
+
+.edit
 {
-    float: right;
-    text-decoration: none;
+    border-radius: 20px;
+    font-family: 'Oswald', sans-serif;
+    float:right;
+}
+.edit:hover
+{
+    cursor: pointer;
+    background-color: #303E40;
+    color: #BFFAFF;
 }
 #container
 {
+    overflow: none;
     float: left;
     height: 100%;
     top:0;
 }
 #topbar
 {
-    width: 720px;
+    width: 960px;
     height: 40px;
     padding-bottom: 5px;
     background-color: #ACE1E6;
@@ -52,12 +61,12 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 
 #sidebar
 {
+    overflow: none;
     padding-top: 20px;
     float: left;
     width: 220px;
     height: 100%;
     background-color: #607D80;
-    position: sticky;
     top: 0;
     padding: 10px;
     
@@ -66,6 +75,7 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 {
     padding: 10px;
     margin-bottom: 60px;
+    font-size: 36px;
 }
 #sidebar a
 {
@@ -87,16 +97,22 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 }
 .content 
 { 
-    width: 720px;
+    overflow: auto;
+    width: 960px;
     background-color: white;
     float: left;
+    height: 100%;
 }
+
+.content::-webkit-scrollbar {
+    display: none;
+  }
 .content > header 
 { 
     border-bottom: 1px solid lightgray; 
     display: flex; 
     align-items: flex-end; 
-    width: 690px;
+    width: 960x;
     padding-right: 30px;
 }
 .content > header h1 { flex: auto; margin: 1rem 0 0.25rem 0; }
@@ -105,7 +121,6 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 {
     padding-left: 30px;
     padding-right: 30px;
-    cursor: pointer;
 }
 .post > header { display: flex; align-items: flex-end; font-size: 0.85em; }
 .post > header > div:first-of-type { flex: auto; }
@@ -115,6 +130,18 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 { 
     color: black;
     word-wrap: break-word;
+}
+
+.post:hover
+{
+    background-color: rgb(224, 255, 252);
+    
+}
+.post:hover > .header {  }
+
+.post .more
+{
+    color: #607D80;
 }
 
 .post .description {color: black; font-style: italic;}
@@ -144,15 +171,19 @@ input[type=submit] { align-self: start; min-width: 10em; }
 
 #sectionL
 {
+    top:0;
     float: left;
     height: 100%;
+    position: sticky;
+    background-color: white;
 }
 
 .crud
 {
+    font-family: 'Oswald', sans-serif;
     margin: 20px;
     padding: 20px;
-    width: 400px;
+    width: 600px;
     border: 2px solid grey;
     border-radius: 20px;
     float: left;
@@ -161,6 +192,7 @@ input[type=submit] { align-self: start; min-width: 10em; }
 
 .crud input
 {
+    font-family: 'Oswald', sans-serif;
     border-radius: 20px;
 }
 
@@ -191,10 +223,152 @@ input[type=submit] { align-self: start; min-width: 10em; }
     margin-bottom: 20px;
     margin-right: 20px;
     padding: 20px;
-    width: 170px;
+    width: 200px;
 }
 
+.detailsD
+{
+    width: 140px;
+    float: right;
+    text-align: right;
+    border-bottom: 2px solid grey;
+}
 .attachments
 {
-    border-top: 2px solid grey;
+    float: right;
+    margin-left: 40px;
+    margin-top: 10px;
 }
+
+#privacy
+{
+    border-radius: 2px solid black;
+    font-size: 18px;
+}
+
+#save
+{
+    border-radius: 20px;
+    font-family: 'Oswald', sans-serif;
+}
+#save:hover
+{
+    cursor: pointer;
+    background-color: #303E40;
+    color: #BFFAFF;
+}
+
+.new
+{
+    
+    border-radius: 20px;
+    font-family: 'Oswald', sans-serif;
+    padding:3px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    float: right;
+}
+.new a
+{
+    text-decoration: none;
+}
+
+.new:hover
+{
+    cursor: pointer;
+    background-color: #303E40;
+    color: #BFFAFF;
+}
+
+.selectPost
+{
+    text-decoration: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 28px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #ACE1E6;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #BFFAFF;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .scientist
+  {
+      margin-left: 10px;
+
+      float: left;
+  }
+
+  #paperclip
+  {
+      display: inherit;
+      font-size: 40px;
+      padding: 10px;
+      border: 2px grey solid;
+      float: right;
+      border-radius: 20px;
+  }
+
+  #paperclip:hover
+  {
+    cursor: pointer;
+    background-color: #303E40;
+    color: #BFFAFF;
+  }

@@ -131,3 +131,10 @@ def display_profile(id):
     user = get_user(id)
     articles = get_users_articles(id)
     return render_template('blog/profile.html', articles=articles, user=user)
+
+
+@bp.route('/<int:id>/article', methods=('GET',))
+def display_article(id):
+    article = get_article(id, check_author=False)
+    user = get_user(article['author_id'])
+    return render_template('blog/article.html', article=article, author=user)

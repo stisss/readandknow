@@ -6,21 +6,30 @@
 
 {% block content %}
   <div class="crud">
-    <form method="post" >
+    <form method="post">
       <input name="title" placeholder="Tytuł artykułu..." id="title" value="{{ request.form['title'] }}" required>
       <input name="description" placeholder="Opis..." id="description" value="{{ request.form['description'] }}" required>
       <textarea name="body" placeholder="Treść..." id="body">{{ request.form['body'] }}</textarea>
-      <input type="submit" value="Publikuj">
+      <input type="submit" value="Publikuj" class="edit">
     </form>
   </div>
-  <div class="details">
+  <div id="privacy" class="details">
+    <div class="scientist">
+      <img src="{{url_for('static', filename='scientist.png')}}" height="50px" width="50px" />
+    </div>
     <div class="detailsD">
-      <script> document.write(new Date().toLocaleDateString()); </script><br><br>
       {{ g.user['name'] ~ " " ~ g.user['last_name'] }}<br>
       {{ g.user['institution']}}
+      <br><br>
+      <script> document.write(new Date().toLocaleDateString()); </script>
     </div>
     <div class="attachments">
-      <div><i class="icon-picture">aaa</i></div>
+      <i id="paperclip" class="fa fa-paperclip" aria-hidden="true"></i><br>
     </div>
   </div>
+  Prywatny
+  <label class="switch">
+    <input type="checkbox">
+    <span class="slider round"></span>
+  </label>
 {% endblock %}

@@ -3,29 +3,34 @@
 {% block header %}
   <h1 id="overview">{% block title %}{% endblock %}</h1>
   {% if g.user %}
-    <a class="action" href="{{ url_for('blog.create') }}">Nowy post</a>
+  <a href="{{ url_for('blog.create') }}"><button class="new">Nowy post</button></a>
   {% endif %}
 {% endblock %}
 
 {% block content %}
   {% for post in posts %}
-    <article class="post">
-      <header>
-        <div>
-          <h1>{{ post['title'] }}</h1>
-          <div class="about">autor: {{ post['name'] ~ " " ~ post['last_name'] }}, {{ post['created'].strftime('%Y-%m-%d') }}</div>
+    
+      <article class="post">
+        <header>
+          <div>
+          <a href="{{ url_for('blog.display_article', id=post['id'])}}" class="selectPost">
+              <h1>{{ post['title'] }}</h1>
+              <div class="about">autor: {{ post['name'] ~ " " ~ post['last_name'] }}, {{ post['created'].strftime('%Y-%m-%d') }}</div>
+          </a>
         </div>
-        {% if g.user['id'] == post['author_id'] %}
-          <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edytuj</a>
-        {%else%}
-          <button id="save">Zapisz</button>
-        {% endif %}
-      </header>
-      <p class="description">{{ post['description'] }}</p>
-      <p class="body">{{post['body'] }}</p>
-    </article>
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
+          {% if g.user['id'] == post['author_id'] %}
+            <a href="{{ url_for('blog.update', id=post['id']) }}"><button class="edit">Edytuj</button></a>
+          {%else%}
+            <button id="save">Zapisz</button>
+          {% endif %}
+        </header>
+        <p class="description">{{ post['description'] }}</p>
+        <p class="body">{{post['body'] | truncate(200) | safe}}</p>
+        <p class="more">[Czytaj więcej]</p>
+      </article>
+      {% if not loop.last %}
+        <hr>
+      {% endif %}
+
   {% endfor %}
 {% endblock %}
