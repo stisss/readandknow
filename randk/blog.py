@@ -114,6 +114,38 @@ def delete(id):
     db.commit()
     return redirect(url_for('blog.index'))
 
+@bp.route('/<int:id>/save', methods=('POST',))
+@login_required
+def save(id):
+    db=get_db()
+
+    check_duplicates = db.execute(
+        'SELECT * FROM saved s'
+        ' WHERE s.id_user=? AND s.id_article=?', (g.user['id'], id)
+    ).fetchone()
+
+    if check_duplicates is None:
+        db.execute('INSERT INTO saved VALUES (?, ?)', (g.user['id'], id))
+        db.commit()
+    else:
+        flash('Ten artykuł został już zapisany')
+    return redirect(url_for('blog.display_article', id=id))
+    
+@bp.route('/saved')
+@login_required
+def saved():
+    articles = get_db().execute(
+        'SELECT a.id, title, description, body, a.created, author_id, name, last_name'
+        ' FROM article a JOIN user u ON a.author_id = u.id JOIN saved s ON s.id_article=a.id'
+        ' WHERE s.id_user = ?'
+        ' ORDER BY created DESC', (g.user['id'],)).fetchall()
+    x = get_db().execute('SELECT * FROM saved').fetchall()
+    if articles is not None:
+        print(articles)
+        print(g.user['id'])
+        print(x)
+    return render_template('blog/saved.html', articles=articles)
+
 
 def get_users_articles(author_id):
     articles = get_db().execute(

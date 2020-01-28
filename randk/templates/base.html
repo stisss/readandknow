@@ -11,7 +11,7 @@
     <h1><a href="{{ url_for('blog.index') }}">Read & Know</a></h1>
     <div class="optionL">Strona główna</div>
     <div class="optionL">Najwyżej oceniane artykuły</div>
-    <div class="optionL">Zapisane</div>
+    <a href="{{ url_for('blog.saved') }}" style="color:black"><div class="optionL">Zapisane</div></a>
     <div class="optionL">Polecane</div>
     <div class="optionL">Współpraca</div>
   </div>
