@@ -1,3 +1,6 @@
+"""@package docstring
+Pakiet db zawiera funkcje związane z obsługą bazy danych SQLite3.
+"""
 import sqlite3
 
 import click
@@ -6,6 +9,10 @@ from flask.cli import with_appcontext
 
 
 def get_db():
+    """Funkcja odpowiedzialna za uzyskiwanie dostępu do bazy danych.
+    Return:
+        g.db:   połączenie z bazą danych
+    """
     if 'db' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE'],
@@ -17,6 +24,7 @@ def get_db():
 
 
 def close_db(e=None):
+    """Funkcja odpowiedzialna za zamknięcie połączenia z bazą dancyh"""
     db = g.pop('db', None)
 
     if db is not None:
@@ -24,6 +32,7 @@ def close_db(e=None):
 
 
 def init_db():
+    """Funkcja inicjalizująca bazę danych"""
     db = get_db()
 
     with current_app.open_resource('schema.sql') as f:
@@ -33,7 +42,8 @@ def init_db():
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
-    """Clear the existing data and create new tables."""
+    """Funkcja, która usuwa istniejące dane i tworzy nowe tabele w bazie.
+    """
     init_db()
     click.echo('Initialized the database.')
 

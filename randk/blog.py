@@ -1,3 +1,7 @@
+"""@package docstring
+Pakiet blog zawiera funkcje odpowiedzialne za dostarczanie danych dla widoków aplikacji i 
+zapisywanie danych podanych przez użytkownika do bazy danych.
+"""
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -10,6 +14,11 @@ bp = Blueprint('blog', __name__)
 
 @bp.route('/')
 def index():
+    """Funkcja obsługująca stronę główną. Pobiera posty z bazy danych.
+    
+    Return:
+        Renderuje szablon html dla strony głównej
+    """
     db = get_db()
     articles = db.execute(
         'SELECT article.id, title, description, body, article.created, author_id, name, last_name'
@@ -22,6 +31,12 @@ def index():
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
+    """Funkcja zawierająca obsługę tworzenia nowego artykułu. Łączy się z bazą danych i umieszcza w niej nowy artykuł.
+    
+    Return:
+        W przypadku zapytania POST: Przekierowuje użytownika na stronę główną
+        W przypadku zapytania GET: Renderuje szablon html dla tworzenia artykułu
+    """
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
@@ -47,6 +62,13 @@ def create():
 
 
 def get_article(id, check_author=True):
+    """Getter artykułu, pobiera artykuł o podanym id z bazy danych
+    Argumenty:
+        id:             id artykułu
+        check_author:   domyślnie sprawdza czy artykuł jest przypisany do zalogowanego użytkownika
+    Return:
+        article:        artykuł o podanym id
+    """    
     article = get_db().execute(
         'SELECT p.id, title, description, body, created, author_id, name, last_name'
         ' FROM article p JOIN user u ON p.author_id = u.id'
@@ -63,6 +85,12 @@ def get_article(id, check_author=True):
     return article
 
 def get_user(id):
+    """Getter użytkownika, pobiera użytkownika o podanym id z bazy danych
+    Argumenty:
+        id:             id użytkownika 
+    Return:
+        user:        użytkownik o podanym id
+    """  
     user = get_db().execute(
         'SELECT id, email, name, last_name, institution'
         ' FROM user'
@@ -79,6 +107,13 @@ def get_user(id):
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
+    """Funkcja zawierająca obsługę modyfikacji artykułu. Pobiera artykuł z bazą danych i zapisuje w niej edytowaną wersję.
+    Argumenty:
+        id:     id artykułu
+    Return:
+        W przypadku zapytania POST: Przekierowuje użytownika na stronę główną
+        W przypadku zapytania GET: Renderuje szablon html dla edycji artykułu
+    """
     article = get_article(id)
 
     if request.method == 'POST':
@@ -108,6 +143,13 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
+    """Funkcja zawierająca obsługę usuwania artykułu. Łączy się z bazą danych i usuwa artykuł o podanym id.
+    
+    Argumenty:
+        id:     id artykułu    
+    Return:
+        Przekierowuje użytownika na stronę główną
+    """
     get_article(id)
     db = get_db()
     db.execute('DELETE FROM article WHERE id = ?', (id,))
@@ -117,6 +159,13 @@ def delete(id):
 @bp.route('/<int:id>/save', methods=('POST',))
 @login_required
 def save(id):
+    """Funkcja zawierająca obsługę umieszczania artykułu w zakładce "Zapisane". Umieszcza w bazie danych artykuł o podanym id.
+    
+    Argumenty:
+        id:     id artykułu    
+    Return:
+        Przekierowuje użytownika na stronę podglądu zapisywanego artykułu
+    """
     db=get_db()
 
     check_duplicates = db.execute(
@@ -134,6 +183,11 @@ def save(id):
 @bp.route('/saved')
 @login_required
 def saved():
+    """Funkcja zawierająca obsługę wyświetlania zapisanych artykułów. Pobiera artykuły z bazy danych.
+    
+    Return:
+        Renderuje szablon html dla widoku zapisanych artykułów
+    """
     articles = get_db().execute(
         'SELECT a.id, title, description, body, a.created, author_id, name, last_name'
         ' FROM article a JOIN user u ON a.author_id = u.id JOIN saved s ON s.id_article=a.id'
@@ -148,6 +202,13 @@ def saved():
 
 
 def get_users_articles(author_id):
+    """Getter artykułów danego użytkownika, pobiera artykuły autora o podanym id z bazy danych.
+    
+    Argumenty:
+        author_id:             id autora postów
+    Return:
+        articles:        artykuły autora o podanym id
+    """ 
     articles = get_db().execute(
         'SELECT p.id, title, description, body, created, author_id'
         ' FROM article p JOIN user u ON p.author_id = u.id'
@@ -160,6 +221,11 @@ def get_users_articles(author_id):
 
 @bp.route('/<int:id>/profile')
 def display_profile(id):
+    """Funkcja zawierająca obsługę wyświetlania profilu użytkownika.
+    
+    Return:
+        Renderuje szablon html dla widoku profilu użytkownika
+    """
     user = get_user(id)
     articles = get_users_articles(id)
     return render_template('blog/profile.html', articles=articles, user=user)
@@ -167,6 +233,13 @@ def display_profile(id):
 
 @bp.route('/<int:id>/article', methods=('GET',))
 def display_article(id):
+    """Funkcja zawierająca obsługę wyświetlania danego artykułów.
+    
+    Argumenty:
+        id:     id wyświetlanego artykułu
+    Return:
+        Renderuje szablon html dla widoku wybranego artykułu
+    """
     article = get_article(id, check_author=False)
     user = get_user(article['author_id'])
     return render_template('blog/article.html', article=article, author=user)

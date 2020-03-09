@@ -1,7 +1,15 @@
+"""@package docstring
+Pakiet init zawiera funkcję, która inicjalizuje aplikację.
+"""
 import os
 from flask import Flask
 
 def create_app(test_config=None):
+    """Funkcja inicjalizująca aplikację Read&Know wraz z blueprintami i wywołaniem inicjalizacji bazy danych.
+    
+    Return:
+        app:    aplikacja Read&Know
+    """
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',

@@ -1,3 +1,6 @@
+"""@package docstring
+Pakiet auth zawiera funkcje związane z obsługą rejestracji, logowania i uwierzytelniania.
+"""
 import functools
 
 from flask import (
@@ -11,6 +14,11 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
+    """Funkcja obsługująca formularz rejestracji w systemie Read&Know
+    
+    Return:
+        Renderuje szablon html dla rejestracji
+    """
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -49,32 +57,39 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
-        if request.method == 'POST':
-            email = request.form['email']
-            password = request.form['password']
-            db = get_db()
-            error = None
-            user = db.execute(
-                'SELECT * FROM user WHERE email = ?', (email,)
-            ).fetchone()
+    """Funkcja obsługująca formularz logowania w systemie Read&Know
+    
+    Return:
+        Renderuje szablon html dla logowania
+    """
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        db = get_db()
+        error = None
+        user = db.execute(
+            'SELECT * FROM user WHERE email = ?', (email,)
+        ).fetchone()
 
-            if user is None:
-                error = 'Incorrect e-mail address.'
-            elif not check_password_hash(user['password'], password):
-                error = 'Incorrect password.'
+        if user is None:
+            error = 'Incorrect e-mail address.'
+        elif not check_password_hash(user['password'], password):
+            error = 'Incorrect password.'
 
-            if error is None:
-                session.clear()
-                session['user_id'] = user['id']
-                return redirect(url_for('index'))
+        if error is None:
+            session.clear()
+            session['user_id'] = user['id']
+            return redirect(url_for('index'))
 
-            flash(error)
+        flash(error)
 
-        return render_template('auth/login.html')
+    return render_template('auth/login.html')
 
 
 @bp.before_app_request
 def load_logged_in_user():
+    """Funkcja ładująca z bazy danych zalogowanego użytkownika za pomocą numeru id uzyskanego z sesji.
+    """
     user_id = session.get('user_id')
 
     if user_id is None:
@@ -87,11 +102,23 @@ def load_logged_in_user():
 
 @bp.route('/logout')
 def logout():
+    """Funkcja służąca do wylogowania z systemu.
+    
+    Return:
+        Wylogowuje i przekierowuje użytkownika na stronę główną
+    """
     session.clear()
     return redirect(url_for('index'))
 
 
 def login_required(view):
+    """Funkcja autoryzująca użytkownika
+    
+    Argumenty:
+        view: aktualny widok wymagający autoryzacji
+    Return:
+        Renderuje szablon html, do którego wymagana była autoryzacja lub szablon html logowania
+    """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
